@@ -7,17 +7,10 @@ import Img from 'gatsby-image'
 import { Navigation } from '.'
 import config from '../../utils/siteConfig'
 
-// Styles
+import logo from "../../images/logo.png";
 import '../../styles/app.css'
 
-/**
-* Main layout component
-*
-* The Layout component wraps around each page and template.
-* It also provides the header, footer as well as the main
-* styles, and meta data for each page.
-*
-*/
+
 const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
     const site = data.allGhostSettings.edges[0].node
     const twitterUrl = site.twitter ? `https://twitter.com/${site.twitter.replace(/^@/, ``)}` : null
@@ -32,16 +25,15 @@ const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
             </Helmet>
 
             <div className="viewport">
-
                 <div className="viewport-top">
                     {/* The main header section on top of the screen */}
                     <header className="site-head" style={{ ...site.cover_image && { backgroundImage: `url(${site.cover_image})` } }}>
-                        <div className="container">
+                        <div className="container" style={{height: "100vh"}}>
                             <div className="site-mast">
                                 <div className="site-mast-left">
                                     <Link to="/">
-                                        {site.logo ?
-                                            <img className="site-logo" src={site.logo} alt={site.title} />
+                                        {logo ?
+                                            <img className="site-logo" style={{filter:"invert(1)",height: "70px"}} src={logo} alt={site.title} />
                                             : <Img fixed={data.file.childImageSharp.fixed} alt={site.title} />
                                         }
                                     </Link>
@@ -58,27 +50,16 @@ const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
                                     <p className="site-banner-desc">{site.description}</p>
                                 </div> :
                                 null}
-                            <nav className="site-nav">
-                                <div className="site-nav-left">
-                                    {/* The navigation items as setup in Ghost */}
-                                    <Navigation data={site.navigation} navClass="site-nav-item" />
-                                </div>
-                                <div className="site-nav-right">
-                                    <Link className="site-nav-button" to="/about">About</Link>
-                                </div>
-                            </nav>
                         </div>
                     </header>
 
                     <main className="site-main">
-                        {/* All the main content gets inserted here, index.js, post.js */}
                         {children}
                     </main>
 
                 </div>
 
                 <div className="viewport-bottom">
-                    {/* The footer at the very bottom of the screen */}
                     <footer className="site-foot">
                         <div className="site-foot-nav container">
                             <div className="site-foot-nav-left">
